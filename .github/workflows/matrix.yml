@@ -30,20 +30,21 @@ jobs:
     runs-on: ubuntu-latest
     env:
       pino: pino
+      mino: ${{matrix.target_environment.name}}
     strategy:
       matrix:
-        application: [api,worker]
-        environment_name: [qa, prd]
-        include:
-          - environment_name: qa
-            environment_type: nonprod
-            env: mino=provaminoqa
-          - environment_name: prd
-            environment_type: prod
-            env: mino=provaminoprd
+        application:
+          - api
+          - worker
+        target_environment:
+          - name: qa
+            type: nonprod
+          - name: prd
+            type: prod
+            
     steps:    
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo This execution is ${{matrix.environment_name}} type: ${{matrix.environment_type}} for ${{matrix.application}}
+          echo This execution is ${{matrix.target_environment.name}} type: ${{matrix.target_environment.type}} for ${{matrix.application}}
           echo env vars pino=$pino mino=$mino
