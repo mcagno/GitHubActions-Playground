@@ -28,6 +28,8 @@ jobs:
         run: echo Hello, world!
   multi-echo:
     runs-on: ubuntu-latest
+    env:
+      pino: ${{matrix.environment_type}}
     strategy:
       matrix:
         application: [api,worker]
@@ -41,4 +43,4 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo This execution is ${{matrix.environment_name}} type: ${{matrix.environment_type}} for ${{matrix.application}}
+          echo This execution is ${{matrix.environment_name}} type: ${{matrix.environment_type}} $pino for ${{matrix.application}}
